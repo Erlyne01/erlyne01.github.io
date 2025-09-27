@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雨铃云服务中心</title>
+<!-- 添加emoji字体支持 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* CSS变量定义 */
+:root {
+--primary-color: #007AFF;   /* 主色调 - 科技蓝 */
+--text-dark: #222222;           /* 深文字色 */
+--bg-light: rgba(240, 248, 255, 0.6); /* 修改后的背景透明度 */
+--card-height: 120px;           /* 统一卡片高度 */
+--transition-speed: 0.2s;      /* 动画速度 */
+--shadow-base: 0 2px 4px rgba(0,0,0,0.05); /* 基础阴影 */
+--hover-shadow: 0 4px 12px rgba(0,122,255,0.15); /* 悬停阴影 */
+}
+/* 基础重置与字体设置 */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Source Han Sans CN', "Segoe UI", system-ui, sans-serif;
+background-image: url('https://www.dmoe.cc/random.php');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+color: var(--text-dark);
+line-height: 1.6;
+}
+/* 容器与布局 */
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 2rem;
+}
+header {
+text-align: center;
+margin-bottom: 2rem;
+}
+h1 {
+font-size: 2.5rem;
+margin-bottom: 1rem;
+color: var(--primary-color);
+}
+/* 搜索框样式 */
+.search-box {
+max-width: 600px;
+margin: 0 auto 2rem;
+position: relative;
+}
+.search-box input {
+width: 100%;
+padding: 12px 40px 12px 20px;
+border: 2px solid #ddd;
+border-radius: 30px;
+font-size: 1rem;
+outline: none;
+transition: all 0.3s;
+}
+.search-box input:focus {
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px rgba(0,122,255,0.2);
+}
+.search-box::after {
+position: absolute;
+right: 15px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 1.2rem;
+opacity: 0.6;
+}
+/* 卡片网格系统 */
+.card-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 24px;
+}
+.card {
+background: rgba(255, 255, 255, 0.6); /* 添加透明度效果 */
+border-radius: 8px;
+box-shadow: var(--shadow-base);
+transition: all var(--transition-speed) ease-out;
+padding: 1.5rem;
+position: relative;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+.card::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: radial-gradient(circle at center, rgba(0,122,255,0.4) 0%, transparent 70%);
+z-index: -1;
+}
+.card h3 {
+font-size: 1.2rem;
+margin-bottom: 0.5rem;
+}
+.card p {
+color: #666;
+font-size: 0.95rem;
+margin-bottom: auto;
+}
+.card a {
+color: var(--primary-color);
+text-decoration: none;
+font-weight: 500;
+display: inline-block;
+margin-top: 10px;
+transition: color 0.2s;
+}
+.card a:hover {
+color: #005bb8;
+}
+.external-link {
+display: flex;
+align-items: center;
+}
+.external-link::after {
+margin-left: 5px;
+font-size: 0.9em;
+}
+/* 悬停与点击效果 */
+.card:hover {
+transform: translateY(-3px);
+box-shadow: var(--hover-shadow);
+}
+.card:active {
+transform: scale(0.98);
+}
+/* 特殊卡片类型 */
+.contact-card {
+background: var(--bg-light); /* 保持原有联系卡片样式 */
+border-left: 4px solid var(--primary-color);
+}
+.contact-item {
+display: flex;
+align-items: center;
+margin-bottom: 0.8rem;
+}
+.contact-icon {
+margin-right: 10px;
+font-size: 1.2rem;
+color: var(--primary-color);
+}
+/* 无图状态处理 */
+.no-image {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.placeholder-icon {
+font-size: 2rem;
+color: #ccc;
+margin-right: 15px;
+}
+/* 空状态提示 */
+.empty-state {
+text-align: center;
+padding: 3rem 0;
+color: #999;
+}
+.empty-state svg {
+width: 60px;
+height: 60px;
+margin-bottom: 1rem;
+opacity: 0.6;
+}
+/* 响应式设计 */
+@media (max-width: 768px) {
+.container {
+padding: 1rem;
+}
+.card-grid {
+grid-template-columns: repeat(2, 1fr);
+gap: 16px;
+}
+.card {
+height: auto;
+min-height: var(--card-height);
+}
+h1 {
+font-size: 2rem;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>雨铃云服务中心</h1>
+<p>快速访问所有服务与资源</p>
+</header>
+<!-- 搜索框 -->
+<div class="search-box">
+<input type="text" placeholder="&#128270;输入关键词搜索..." id="searchInput">
+</div>
+<!-- 卡片网格 -->
+<main class="card-grid" id="cardGrid">
+<!-- CFCSA公益对接 -->
+<article class="card" data-category="cfcsa">
+<h3>CFCSA公益对接</h3>
+<p>访问网站购买友商产品</p>
+<a href="http://cfcsa.0ig.cn" class="external-link" target="_blank" rel="noopener noreferrer">&#128640;立即前往</a>
+</article>
+<!-- 雨铃云分享 -->
+<article class="card" data-category="share">
+<h3>雨铃云分享</h3>
+<p>纯净资源聚集地</p>
+<a href="https://share.yuling.dpdns.org" class="external-link" target="_blank" rel="noopener noreferrer">&#128193;立即前往</a>
+</article>
+<!-- 1号机自助开户 -->
+<article class="card" data-category="cloud01">
+<h3>1号机自助开户</h3>
+<p>便捷管理，即刻享用</p>
+<a href="https://cloud01.lingcloud.dpdns.org" class="external-link" target="_blank" rel="noopener noreferrer">&#128187;立即前往</a>
+</article>
+<!-- 2号机自助开户 -->
+<article class="card" data-category="cloud02">
+<h3>2号机自助开户</h3>
+<p>便捷管理，即刻享用</p>
+<a href="https://cloud02.lingcloud.dpdns.org" class="external-link" target="_blank" rel="noopener noreferrer">&#128187;立即前往</a>
+</article>
+<!-- B站视频 -->
+<article class="card" data-category="bilibili">
+<h3>官方B站介绍视频</h3>
+<p>观看最新视频</p>
+<a href="https://www.bilibili.com/video/BV1mt43eqEuw" class="external-link" target="_blank" rel="noopener noreferrer">&#127916;立即观看</a>
+</article>
+<!-- 联系方式 -->
+<article class="card contact-card">
+<h3>联系我们</h3>
+<ul class="contact-list">
+<li class="contact-item">&#128222; <span>166-3959-2230</span></li>
+<li class="contact-item">&#9993;️ <span>cfcsa@foxmail.com</span></li>
+<li class="contact-item">&#128038; <a href="https://space.bilibili.com/3546557139913501" target="_blank" rel="noopener noreferrer">B站账号主页</a></li>
+</ul>
+</article>
+</main>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const searchInput = document.getElementById('searchInput');
+const cardGrid = document.getElementById('cardGrid');
+const cards = Array.from(document.querySelectorAll('.card')); // 包括所有卡片类型
+// 实时搜索功能（优化：使用dataset属性）
+searchInput.addEventListener('input', function(e) {
+const keyword = e.target.value.toLowerCase();
+cards.forEach(card => {
+[^7.6^]const isMatch = card.dataset.category.includes(keyword) ||  // 根据分类过滤
+card.querySelector('h3').textContent.toLowerCase().includes(keyword) || // 根据标题过滤
+card.querySelector('p').textContent.toLowerCase().includes(keyword); // 根据描述过滤
+card.style.display = isMatch ? 'flex' : 'none';
+});
+});
+// 点击反馈增强（优化：使用transform代替scale）
+cards.forEach(card => {
+card.addEventListener('click', () => {
+card.style.transform = 'translateY(2px)'; // 下压效果
+setTimeout(() => card.style.transform = '', 200); // 恢复动画
+});
+});
+});
+</script>
+</body>
+</html>
